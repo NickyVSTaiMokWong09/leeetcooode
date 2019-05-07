@@ -16,15 +16,20 @@ public:
             inverted_table[nums[i]] = i;
         }
         
-        for (auto &i : inverted_table)
+        for (int i = 0; i < nums.size(); i++)
         {
-            auto finder = inverted_table.find(target - i.first);
-            if (finder != inverted_table.end())
+            int complement = target - nums[i];
+            auto range = inverted_table.equal_range(complement);
+            for (auto iter = range.first; iter != range.second; iter++)
             {
-                return vector<int>{i.second, finder->second};
+                if (iter->second != i)
+                {
+                    return vector<int>{i, iter->second};
+                }
+                
             }
-            
         }
+        
         return vector<int>{};
     }
 };
